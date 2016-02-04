@@ -1,0 +1,19 @@
+{
+    "name": "kravock/php-smsbroadcast",
+    "description": "PHP Wrapper for SmsBroadcast.com.au HTTP API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Broberg",
+            "email": "andrew.broberg@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-0": { "SmsBroadcast": "src/SmsBroadcast.php" }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.1.*"
+    }
+}
