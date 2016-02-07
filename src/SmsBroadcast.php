@@ -1,8 +1,5 @@
 <?php
 
-/**
-* 						
-*/
 class SmsBroadcast
 {
 
@@ -22,10 +19,6 @@ class SmsBroadcast
 		}
 
 		if ( isset( $config['sender_name'] )) {
-			if ( ! ctype_alnum($sender_name) OR strlen( $sender_name ) > 11 ) {
-				throw new Exception('Invalid Sender Name. Sender Name must be up to 11 characters and not contain punctuation or spaces');
-			}
-
 			$this->_sender_name = $config['sender_name'];
 		}
 
@@ -36,6 +29,16 @@ class SmsBroadcast
 	public function initialize($config = array())
 	{
 		$this->__construct($config);
+	}
+
+	public function setSender($sender_name = '')
+	{
+		$this->_sender_name = $sender_name;
+	}
+
+	public function getSender()
+	{
+		return $this->_sender_name;
 	}
 
 	/**
@@ -65,7 +68,13 @@ class SmsBroadcast
 			throw new Exception( 'Maxsplit must be 5 or less' );
 		}
 
+		if( empty( $this->_sender_name ) ) {
+			throw new Exception( 'You haven\'t specified a sender name' );
+		}
+
 		$url = '&to='. implode(',', $recipients);
+		$url .= '&from='.$this->_sender_name;
+		$url .= '&message='.$message;
 
 		if ( $ref ) {
 			$url .= '&ref='.$ref;
@@ -84,9 +93,9 @@ class SmsBroadcast
 	public function getBalance()
 	{
 		$url = '&action=balance';
-		$result = $this->fetch($url);
+		$result = $this->_fetch($url);
 
-		return explode(':', $result)[1];
+		return (int) explode(':', $result)[1];
 	}
 
 	private function _fetch($url = '')
@@ -95,16 +104,12 @@ class SmsBroadcast
 		$built_string = $this->_api_endpoint . '?username='.rawurlencode( $this->_username ).
 		'&password='.rawurlencode( $this->_password );
 
-		if( $this->_sender_name ) {
-			$built_string .= '&from='.$this->_sender_name;
-		}
-
 		$built_string .= $url;
 
 		$ch = curl_init($built_string);
 
 		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $built_string);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$output = curl_exec ($ch);
 		curl_close ($ch);
