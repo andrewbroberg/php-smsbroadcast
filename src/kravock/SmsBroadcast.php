@@ -13,11 +13,11 @@ class SmsBroadcast
 	function __construct($config = array())
 	{
 		if ( ! isset($config['username']) AND empty($_username)) {
-			throw new Exception('Username not Specified');
+			throw new \Exception('Username not Specified');
 		}
 
 		if ( ! isset($config['password']) AND empty($_password)) {
-			throw new Exception('Password not Specified');
+			throw new \Exception('Password not Specified');
 		}
 
 		if ( isset( $config['sender_name'] )) {
@@ -55,23 +55,23 @@ class SmsBroadcast
 	public function sendSms($message = '', $recipients = array(), $ref = FALSE, $maxsplit = 1, $delay = 0)
 	{
 		if ( empty($recipients) ) {
-			throw new Exception( 'You haven\'t specified any recipients' );
+			throw new \Exception( 'You haven\'t specified any recipients' );
 		}
 
 		if ( empty($message) ) {
-			throw new Exception( 'You haven\'t specified a message to send' );
+			throw new \Exception( 'You haven\'t specified a message to send' );
 		}
 
 		if ( strlen( $ref ) > 20 ) {
-			throw new Exception( 'Ref must be 20 characters or less' );
+			throw new \Exception( 'Ref must be 20 characters or less' );
 		}
 
 		if ( $maxsplit > 5 ) {
-			throw new Exception( 'Maxsplit must be 5 or less' );
+			throw new \Exception( 'Maxsplit must be 5 or less' );
 		}
 
 		if( empty( $this->_sender_name ) ) {
-			throw new Exception( 'You haven\'t specified a sender name' );
+			throw new \Exception( 'You haven\'t specified a sender name' );
 		}
 
 		$url = '&to='. implode(',', $recipients);
@@ -118,11 +118,11 @@ class SmsBroadcast
 		curl_close ($ch);
 
 		if($status != '200') {
-			throw new Exception ("Invalid response: $status for request: $built_string");
+			throw new \Exception ("Invalid response: $status for request: $built_string");
 		}
 
 		if( explode(':', $output) AND $output[0] === 'ERROR' ) {
-			throw new Exception( $output[1] );
+			throw new \Exception( $output[1] );
 		}
 
 		return $output;
