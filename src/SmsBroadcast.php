@@ -1,5 +1,7 @@
 <?php
 
+namespace kravock;
+
 class SmsBroadcast
 {
 
@@ -7,7 +9,7 @@ class SmsBroadcast
 	private $_password;
 	private $_sender_name;
 	private $_api_endpoint = 'https://api.smsbroadcast.com.au/api-adv.php';
-	
+
 	function __construct($config = array())
 	{
 		if ( ! isset($config['username']) AND empty($_username)) {
