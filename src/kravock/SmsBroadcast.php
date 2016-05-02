@@ -114,7 +114,12 @@ class SmsBroadcast
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $built_string);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$output = curl_exec ($ch);
+		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close ($ch);
+
+		if($status != '200') {
+			throw new Exception ("Invalid response: $status for request: $built_string");
+		}
 
 		if( explode(':', $output) AND $output[0] === 'ERROR' ) {
 			throw new Exception( $output[1] );
