@@ -74,18 +74,18 @@ class SmsBroadcast
 			throw new \Exception( 'You haven\'t specified a sender name' );
 		}
 
-		$url = '&to='. implode(',', $recipients);
-		$url .= '&from='.$this->_sender_name;
-		$url .= '&message='.$message;
+		$url = '&to='. rawurlencode(implode(',', $recipients));
+		$url .= '&from='.rawurlencode($this->_sender_name);
+		$url .= '&message='.rawurlencode($message);
 
 		if ( $ref ) {
-			$url .= '&ref='.$ref;
+			$url .= '&ref='.rawurlencode($ref);
 		}
 
-		$url .= '&maxsplit='.$maxsplit;
+		$url .= '&maxsplit='.rawurlencode($maxsplit);
 
 		if ( $delay > 0 ) {
-			$url .= '&delay='.$delay;
+			$url .= '&delay='.rawurlencode($delay);
 		}
 
 		return $this->_fetch($url);
