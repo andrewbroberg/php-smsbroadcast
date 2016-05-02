@@ -11,7 +11,7 @@
     ],
     "require": {},
     "autoload": {
-        "psr-0": { "kravock\\": "src/" }
+        "psr-4": { "kravock\\": "src/kravock" }
     },
     "require-dev": {
         "phpunit/phpunit": "5.1.*"
