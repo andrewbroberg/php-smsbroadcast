@@ -1,5 +1,5 @@
 <?php
-require_once "src/SmsBroadcast.php";
+require_once "src/kravock/SmsBroadcast.php";
 
 class SmsBroadcastTests extends PHPUnit_Framework_TestCase
 {
