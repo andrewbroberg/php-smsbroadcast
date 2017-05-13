@@ -43,7 +43,7 @@ class SmsBroadcastTests extends PHPUnit_Framework_TestCase
 
     public function testSendSms()
     {
-        $result = $this->sms->sendSms('Hello world',array('0400534986','0400534986'));
+        $result = $this->sms->sendSms('Hello world',array('0400000000'));
 
         $this->assertInternalType('string', $result);
     }
